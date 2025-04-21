@@ -3,7 +3,7 @@
 #          Created by Leso_KN - 2020
 #
 
-name: CI
+name: CI-v7a
 
 on: [push]
 
@@ -30,26 +30,18 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
 
-##
+  ##
 
   openssl-nghttp2:
     strategy:
       matrix:
-        target: [ios, android]
+        target: [android]
         component: [openssl, nghttp2]
         include:
-          
-          # iOS Configuration
-          - target: ios
-            arch: arm64
-            sdk: iphoneos
-            api: "8.0"
-            platform: iPhoneOS
-
           # Android Configuration
           - target: android
-            arch: arm64
-            abi: arm64-v8a
+            arch: arm
+            abi: armeabi-v7a
             api: 23
 
           # OpenSSL version
@@ -82,7 +74,7 @@ jobs:
           echo "api=${{ matrix.api }}" >> $GITHUB_ENV
           echo "platform=${{ matrix.platform }}" >> $GITHUB_ENV
           echo "version=${{ matrix.version }}" >> $GITHUB_ENV
-          
+
           echo "product_dir=${{ matrix.component }}_${{ matrix.version }}-${{ matrix.target }}-${{ matrix.arch }}" >> $GITHUB_ENV
 
           source $GITHUB_ENV
@@ -116,26 +108,18 @@ jobs:
           asset_name: ${{ env.product_dir }}.zip
           asset_content_type: application/zip
 
-##
+  ##
 
   curl:
     strategy:
       matrix:
-        target: [ios, android]
+        target: [android]
         component: [curl]
         include:
-                    
-          # iOS Configuration
-          - target: ios
-            arch: arm64
-            sdk: iphoneos
-            api: "8.0"
-            platform: iPhoneOS
-
           # Android Configuration
           - target: android
-            arch: arm64
-            abi: arm64-v8a
+            arch: arm
+            abi: armeabi-v7a
             api: 23
 
           # cURL version
@@ -164,7 +148,7 @@ jobs:
           echo "api=${{ matrix.api }}" >> $GITHUB_ENV
           echo "platform=${{ matrix.platform }}" >> $GITHUB_ENV
           echo "version=${{ matrix.version }}" >> $GITHUB_ENV
-          
+
           echo "product_dir=${{ matrix.component }}_${{ matrix.version }}-${{ matrix.target }}-${{ matrix.arch }}" >> $GITHUB_ENV
 
           source $GITHUB_ENV
