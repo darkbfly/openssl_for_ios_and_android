@@ -5,7 +5,7 @@
 
 name: CI-v7a
 
-on: [push]
+on: [push, workflow_dispatch]
 
 ##
 
